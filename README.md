@@ -20,7 +20,13 @@ Chap command is meant to be executed on the server which you want to deploy the 
 
 ## Setup
 
-Chap requires 3 configuration files: chap.yml, chap.json and node.json.  chap.json contains capistrano-like configuration settings.  node.json is intended to be the same file that chef solo uses and contains instance specific information, like node[:instance_role].  The paths of the chap.json and node.json are configurable via the chap.yml file.  Here are examples of the starter setup files that you can generate via: 
+Chap requires 3 configuration files: chap.yml, chap.json and node.json.
+
+* chap.json: contains capistrano-like configuration settings.
+* node.json: is intended to be the same file that chef solo uses and contains instance specific information, like node[:instance_role].
+: chap.yml: The paths of the chap.json and node.json are configurable via the chap.yml file.
+
+Here are examples of the starter setup files that you can generate via: 
 
 <pre>
 $ chap setup -o /etc/chef
@@ -74,11 +80,11 @@ $ cap deploy # cap recipe calls "chap deploy"
 Chef Chap LWRP:
 
 <pre>
-chap_deploy # chef resource calls deploy
+chap_deploy # chef resource calls "chap deploy"
 </pre>
 
 
-Chap loads up information from node.json because it needs that information for hooks, which will work differently for different server roles.  For example, the chap/restart hook below will run "touch tmp/restart.txt" for an app role and will run "rvmsudo bluepill restart resque" for a resque role.  Example:
+Chap loads up information from node.json because it needs that information for hooks, which tend to work differently for different server roles.  For example, the chap/restart hook below will run "touch tmp/restart.txt" for an app role and will run "rvmsudo bluepill restart resque" for a resque role.  Example:
 
 <pre>
 $ cat chap/restart
@@ -104,9 +110,9 @@ Deploy hooks get evaluated within the context of a chap deploy run and have some
 Special variables:
 
 * node - contains data from /etc/chef/node.json.  Avaiable as mash.
-* chap - contains data from /etc/chef/chap.json and some special variables added by chap.  Avaiable as mash.  Special variables: release_path current_path shared_path cached_path.  The special variables are also available directly as methods.
+* chap - contains data from /etc/chef/chap.json and some special variables added by chap.  Avaiable as mash.  Special variables: release_path, current_path, shared_path, cached_path.  The special variables are also available directly as methods.
 
 Special methods:
 
 * run - output the command to be ran and runs command.
-* log - log messages to chap.log.
+* log - log messages to [shared_path]/chap/chap.log.
