@@ -1,0 +1,10 @@
+{
+  "repo": "git@github.com:tongueroo/chapdemo.git",
+  "branch": "master",
+  "application": "chapdemo",
+  "deploy_to": "/data/chapdemo",
+  "strategy": "git",
+  "keep": 5,
+  "user": "deploy",
+  "group": "deploy"
+}
