@@ -1,0 +1,5 @@
+{
+  "environment": "staging",
+  "application": "chapdemo",
+  "instance_role": "app"
+}

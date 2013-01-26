@@ -1,0 +1,2 @@
+chap: /etc/chef/chap.json
+node: /etc/chef/node.json

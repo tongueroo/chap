@@ -1,0 +1,10 @@
+#!/usr/bin/env ruby
+
+restart = case node[:instance_role]
+          when 'app'
+            "touch tmp/restart.txt"
+          when 'resque'
+            "rvmsudo bluepill restart resque"
+          end
+log "cd #{current_path} && #{restart}"
+run "cd #{current_path} && echo '#{restart}'"
