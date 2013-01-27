@@ -21,8 +21,27 @@ module Chap
     end
 
     def self.deploy(options)
-      @runner = options.empty? ? Runner.new : Runner.new(options)
-      @runner.deploy
+      runner = options.empty? ? Runner.new : Runner.new(options)
+      runner.deploy
+    end
+
+    def self.s3_upload(options)
+      s3 = Chap::S3.new(options)
+      s3.upload(options[:file])
+    end
+
+    def self.s3_download(options)
+      s3 = Chap::S3.new(options)
+      data = s3.download
+      data = yield(data) if block_given?
+      File.open(options[:file], 'w') do |file|
+        file.write(data)
+      end
+    end
+
+    def self.s3_change(options)
+      s3 = Chap::S3.new(options)
+      s3.change(options[:variables])
     end
   end
 end

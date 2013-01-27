@@ -22,6 +22,7 @@ Gem::Specification.new do |gem|
   gem.add_dependency "thor"
   gem.add_dependency "colorize"
   gem.add_dependency "logger"
+  gem.add_dependency "aws-sdk"
 
   gem.add_development_dependency 'rspec'
   gem.add_development_dependency 'guard'
