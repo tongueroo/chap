@@ -38,7 +38,7 @@ module Chap
     end
 
     def strategy
-      strategy = config.chap[:strategy] || 'git'
+      strategy = config.strategy
       klass = Strategy.const_get(camel_case(strategy))
       @strategy ||= klass.new(:config => @config)
     end

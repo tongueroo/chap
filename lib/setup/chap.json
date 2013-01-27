@@ -3,7 +3,7 @@
   "branch": "master",
   "application": "chapdemo",
   "deploy_to": "/data/chapdemo",
-  "strategy": "git",
+  "strategy": "checkout",
   "keep": 5,
   "user": "deploy",
   "group": "deploy"

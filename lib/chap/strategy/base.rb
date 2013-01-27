@@ -10,6 +10,7 @@ module Chap
         log "Deploying via #{self.class} strategy".colorize(:green)
       end
 
+      # should download code to the release_path
       def deploy
         raise "Must implement deploy method"
       end

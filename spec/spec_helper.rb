@@ -23,7 +23,7 @@ def write_chap_json
   chap = JSON.parse(IO.read("#{@system_root}/etc/chef/chap.json"))
   chap['deploy_to'] = @system_root + chap['deploy_to']
   if ENV['TIER'] == '2'
-    chap['strategy'] = "git"
+    chap['strategy'] = "checkout"
   else
     chap['strategy'] = "copy"
   end

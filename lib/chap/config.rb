@@ -73,8 +73,12 @@ module Chap
 
     def cached_path
       return @cached_path if @cached_path
-      owner = chap[:repo].split(':').last.split('/').first
-      @cached_path = "#{shared_path}/cached-copy/#{owner}"
+      path = chap[:repo].split(':').last.sub('.git','')
+      @cached_path = "#{shared_path}/cache/#{strategy}/#{path}"
+    end
+
+    def strategy
+      chap[:strategy] || 'checkout'
     end
 
     def log(msg)
