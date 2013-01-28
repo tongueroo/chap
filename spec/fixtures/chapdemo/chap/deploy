@@ -2,3 +2,5 @@
 
 log "cd #{release_path} && bundle"
 run "cd #{release_path} && echo bundle"
+
+symlink_configs

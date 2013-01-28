@@ -58,7 +58,7 @@ module Chap
         FileUtils.mkdir_p(dirname) unless File.exist?(dirname)
         if File.symlink?(dest)
           File.delete(dest)
-        elsif File.directory?(dest)
+        elsif File.exist?(dest)
           FileUtils.rm_rf(dest)
         end
         FileUtils.ln_s(src,dest)
