@@ -6,6 +6,7 @@ module Chap
     def initialize(path, config)
       @path = path
       @config = config
+      @with = nil
     end
 
     def evaluate
@@ -25,6 +26,17 @@ module Chap
         FileUtils.rm_rf(dest) if File.exist?(dest)
         FileUtils.ln_s(src,dest)
       end
+    end
+
+    def with(prepend)
+      prev, @with = @with, prepend
+      yield
+      @with = prev
+    end
+
+    def run(cmd)
+      cmd = "#{@with} #{cmd}"
+      config.run(cmd)
     end
 
   end

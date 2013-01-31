@@ -102,7 +102,7 @@ module Chap
       @logger
     end
 
-    def run(cmd)      
+    def run(cmd)
       log "Running: #{cmd}"
       cmd = "#{cmd} 2>&1" unless cmd.include?(" > ")
       out = `#{cmd}`
