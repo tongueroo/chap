@@ -7,4 +7,4 @@ restart = case node[:instance_role]
             "rvmsudo bluepill restart resque"
           end
 log "cd #{current_path} && #{restart}"
-run "cd #{current_path} && echo '#{restart}'"
+run "cd #{current_path} && echo '#{restart}' > restart.txt"

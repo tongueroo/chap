@@ -51,30 +51,40 @@ module Chap
       @timestamp ||= Time.now.strftime("%Y%m%d%H%M%S")
     end
 
+    # useful so we can test hooks
+    def override_timestamp(timestamp)
+      @timestamp = timestamp
+    end
+
     def deploy_to
       chap[:deploy_to]
     end
 
     # special attributes added to chap  
     def release_path
-      return @release_path if @release_path
-      @release_path = "#{deploy_to}/releases/#{timestamp}"
+      "#{deploy_to}/releases/#{timestamp}"
     end
 
     def current_path
-      return @current_path if @current_path
-      @current_path = "#{deploy_to}/current"
+      "#{deploy_to}/current"
     end
 
     def shared_path
-      return @shared_path if @shared_path
-      @shared_path = "#{deploy_to}/shared"
+      "#{deploy_to}/shared"
     end
 
     def cached_path
       return @cached_path if @cached_path
       path = chap[:repo].split(':').last.sub('.git','')
       @cached_path = "#{shared_path}/cache/#{strategy}/#{path}"
+    end
+
+    def latest_release
+      return @latest_release if @latest_release
+      @latest_release = Dir.glob("#{deploy_to}/releases/*").
+                          select {|p| File.directory?(p) }.
+                          sort.
+                          last
     end
 
     def strategy

@@ -1,5 +1,10 @@
 # Chap
 
+[![Build History][2]][1]
+
+[1]: http://travis-ci.org/tongueroo/chap
+[2]: https://secure.travis-ci.org/tongueroo/chap.png?branch=master
+
 chef + capistrano = chap: deploy your app with either chef or capistrano.  This was written to solve the issue between having 2 deployment systems that are very similar but not exactly the same.  With chap you can deploy to a single server by running one command: 
 
 <pre>
@@ -119,3 +124,14 @@ Special methods:
 
 * run - output the command to be ran and runs command.
 * log - log messages to [shared_path]/chap/chap.log.
+
+### Test deploy hooks
+
+When a chap hook fails, you want want to quicky test it on the server without having commit new code and running a full deploy.  You can edit the chap/* hooks on the spot and test them via:
+
+<pre>
+$ cap hook deploy
+$ cap hook restart
+</pre>
+
+This will test the hooks on the latest timestamp release at [deploy_to]/releases/[timestamp].

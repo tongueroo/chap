@@ -2,5 +2,6 @@
 
 log "cd #{release_path} && bundle"
 run "cd #{release_path} && echo bundle"
+run "cd #{release_path} && echo 'chap deploy hook' > deploy.txt"
 
 symlink_configs

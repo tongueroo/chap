@@ -1,6 +1,6 @@
 module Chap
   module SpecialMethods
-    SPECIAL_METHODS = %w/deploy_to release_path current_path shared_path cached_path node chap log run/
+    SPECIAL_METHODS = %w/deploy_to release_path current_path shared_path cached_path latest_release node chap log run/
 
     def self.included(base)
       base.send(:extend, ClassMethods)

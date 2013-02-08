@@ -22,5 +22,19 @@ module Chap
     def deploy
       Chap::Task.deploy(options)
     end
+
+    desc "hook", "Run chap hook"
+    long_desc <<-EOL
+      Example:
+
+      $ chap hook deploy
+
+      A way to test the chap hooks
+    EOL
+    method_option :quiet, :aliases => '-q', :type => :boolean, :desc => "Quiet commands"
+    method_option :config, :aliases => '-c', :default => '/etc/chef/chap.yml', :desc => "chap.yml config to use"
+    def hook(name)
+      Chap::Runner.new(options).test_hook(name)
+    end
   end
 end

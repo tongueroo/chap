@@ -116,6 +116,12 @@ module Chap
       dirs.map! {|p| "#{shared_path}/#{p}"}
     end
 
+    def test_hook(name)
+      timestamp = File.basename(latest_release)
+      config.override_timestamp(timestamp)
+      hook(name)
+    end
+
     def hook(name)
       log "Running hook: #{name}".colorize(:green)
       path = "#{release_path}/chap/#{name}"
