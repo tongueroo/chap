@@ -12,6 +12,7 @@ module Chap
       setup
       strategy.deploy
       symlink_shared
+      rm_rvmrc
       hook(:deploy)
       symlink_current
       hook(:restart)
@@ -69,6 +70,13 @@ module Chap
       FileUtils.rm(current_path) if File.exist?(current_path)
       FileUtils.ln_s(release_path, current_path)
       log "Current symlink updated".colorize(:green)
+    end
+
+    def rm_rvmrc
+      %w[.rvmrc .ruby-version].each do |file|
+        path = "#{release_path}/#{file}"
+        run "rm -f #{path}" if File.exist?(path)
+      end
     end
 
     def cleanup
