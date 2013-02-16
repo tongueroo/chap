@@ -9,14 +9,28 @@ module Chap
     end
 
     def deploy
+      deploy_to_symlink
+      deploy_from_symlink
+    end
+
+    def deploy_to_symlink
       setup
       strategy.deploy
       symlink_shared
       rm_rvmrc
       hook(:deploy)
+    end
+
+    def deploy_from_symlink(use_previous=false)
+      use_previous_timestamp if use_previous
       symlink_current
       hook(:restart)
       cleanup
+    end
+
+    def symlink
+      use_previous_timestamp
+      symlink_current
     end
 
     def setup
@@ -125,9 +139,13 @@ module Chap
     end
 
     def test_hook(name)
+      use_previous_timestamp
+      hook(name)
+    end
+
+    def use_previous_timestamp
       timestamp = File.basename(latest_release)
       config.override_timestamp(timestamp)
-      hook(name)
     end
 
     def hook(name)

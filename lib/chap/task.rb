@@ -22,7 +22,13 @@ module Chap
 
     def self.deploy(options)
       runner = options.empty? ? Runner.new : Runner.new(options)
-      runner.deploy
+      if options[:stop_at_symlink]
+        runner.deploy_to_symlink
+      elsif options[:cont_at_symlink]
+        runner.deploy_from_symlink(true)
+      else
+        runner.deploy
+      end
     end
   end
 end

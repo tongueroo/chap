@@ -19,6 +19,8 @@ module Chap
     EOL
     method_option :quiet, :aliases => '-q', :type => :boolean, :desc => "Quiet commands"
     method_option :config, :aliases => '-c', :default => '/etc/chef/chap.yml', :desc => "chap.yml config to use"
+    method_option :stop_at_symlink, :type => :boolean, :desc => "Deploy code but stop right before the symlink"
+    method_option :cont_at_symlink, :type => :boolean, :desc => "Symlink and contine the deploy"
     def deploy
       Chap::Task.deploy(options)
     end
@@ -35,6 +37,20 @@ module Chap
     method_option :config, :aliases => '-c', :default => '/etc/chef/chap.yml', :desc => "chap.yml config to use"
     def hook(name)
       Chap::Runner.new(options).test_hook(name)
+    end
+
+    desc "symlink", "Symlink latest timestamp release to current"
+    long_desc <<-EOL
+      Example:
+
+      $ chap symlink
+
+      Useful for testing between testing deploy and restart hooks.
+    EOL
+    method_option :quiet, :aliases => '-q', :type => :boolean, :desc => "Quiet commands"
+    method_option :config, :aliases => '-c', :default => '/etc/chef/chap.yml', :desc => "chap.yml config to use"
+    def symlink
+      Chap::Runner.new(options).symlink
     end
   end
 end
