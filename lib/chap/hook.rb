@@ -28,6 +28,13 @@ module Chap
       end
     end
 
+    def rm_rvmrc
+      %w[.rvmrc .ruby-version].each do |file|
+        path = "#{release_path}/#{file}"
+        run "rm -f #{path}" if File.exist?(path)
+      end
+    end
+
     def with(prepend)
       prev, @with = @with, prepend
       yield

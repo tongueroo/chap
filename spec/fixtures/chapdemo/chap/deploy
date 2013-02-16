@@ -1,5 +1,7 @@
 #!/usr/bin/env ruby
 
+rm_rvmrc
+
 log "cd #{release_path} && bundle"
 run "cd #{release_path} && echo bundle"
 run "cd #{release_path} && echo 'chap deploy hook' > deploy.txt"
