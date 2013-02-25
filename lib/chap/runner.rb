@@ -17,7 +17,7 @@ module Chap
 
     def deploy_to_symlink
       setup
-      strategy.deploy
+      deploy_via_strategy
       symlink_shared
       rm_rvmrc
       hook(:deploy)
@@ -58,6 +58,10 @@ module Chap
       strategy = config.strategy
       klass = Strategy.const_get(camel_case(strategy))
       @strategy ||= klass.new(:config => @config)
+    end
+
+    def deploy_via_strategy
+      strategy.deploy
     end
 
     def camel_case(string)
@@ -160,7 +164,7 @@ module Chap
       end
     end
 
-    benchmark :setup, :symlink_shared, :rm_rvmrc, :hook, :symlink_current, :cleanup
+    benchmark :setup, :symlink_shared, :rm_rvmrc, :hook, :symlink_current, :cleanup, :deploy_via_strategy
 
   end # eof Runner
 end # eof Chap

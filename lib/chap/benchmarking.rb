@@ -68,7 +68,7 @@ module Chap
       benchmarks.sort_by {|x| x[1]}.reverse.each(&report_block)
 
       report.each do |line|
-        puts line unless options[:quiet]
+        log(line) unless options[:quiet]
       end
     end
 
