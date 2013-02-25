@@ -1,6 +1,7 @@
 module Chap
   class Runner
     include SpecialMethods
+    include Benchmarking
 
     attr_reader :options, :config
     def initialize(options={})
@@ -11,6 +12,7 @@ module Chap
     def deploy
       deploy_to_symlink
       deploy_from_symlink
+      report_benchmarks
     end
 
     def deploy_to_symlink
@@ -157,5 +159,8 @@ module Chap
         log "chap/#{name} hook does not exist".colorize(:red)
       end
     end
-  end
-end
+
+    benchmark :setup, :symlink_shared, :rm_rvmrc, :hook, :symlink_current, :cleanup
+
+  end # eof Runner
+end # eof Chap
