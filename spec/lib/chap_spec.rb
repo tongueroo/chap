@@ -31,7 +31,7 @@ describe Chap do
 
   describe "cli deploy" do
     it "should deploy code via command line" do
-      system("cd #{root} && ./bin/chap deploy -q -c #{system_root}/etc/chef/chap.yml")
+      system("cd #{root} && ./bin/chap deploy  -c #{system_root}/etc/chef/chap.yml")
       releases = Dir.glob("#{system_root}/data/chapdemo/releases/*").sort
       timestamp = releases.last.split('/').last
       release_path = "#{system_root}/data/chapdemo/releases/#{timestamp}"

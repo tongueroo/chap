@@ -24,7 +24,8 @@ module Chap
             method_name = if args.empty?
                             "#{method}"
                           else
-                            "#{method}" + '("' + args.join(',') + '")'
+                            name = "#{method}" + '("' + args.join(',') + '")'
+                            name = shorten_name(name)
                           end
             method_name = scope + ': ' + method_name if scope
             @@benchmarks << [method_name, realtime]
@@ -33,6 +34,16 @@ module Chap
         EOL
         alias_method "#{method}_without_benchmark", method
         alias_method method, "#{method}_with_benchmark"
+      end
+    end
+
+    def shorten_name(string)
+      if string.length >= 80
+        preprend = string[0,20]
+        append = string[-55..-1]
+        preprend + ' ... ' + append
+      else 
+        string
       end
     end
 
