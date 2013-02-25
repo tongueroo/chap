@@ -103,7 +103,7 @@ describe Chap do
 
     it "should only respect keep option" do
       system("cd #{root} && ./bin/chap deploy -q -c #{system_root}/etc/chef/chap.yml")
-      system("cd #{root} && ./bin/chap deploy -q -c #{system_root}/etc/chef/chap.yml")
+      sleep 1
       system("cd #{root} && ./bin/chap deploy -q -c #{system_root}/etc/chef/chap.yml")
       releases = Dir.glob("#{system_root}/data/chapdemo/releases/*").size
       releases.should == 2 # test the keep option

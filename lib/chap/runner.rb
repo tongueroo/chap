@@ -1,6 +1,7 @@
 module Chap
   class Runner
     include SpecialMethods
+    include Benchmarking
 
     attr_reader :options, :config
     def initialize(options={})
@@ -11,11 +12,12 @@ module Chap
     def deploy
       deploy_to_symlink
       deploy_from_symlink
+      report_benchmarks
     end
 
     def deploy_to_symlink
       setup
-      strategy.deploy
+      deploy_via_strategy
       symlink_shared
       rm_rvmrc
       hook(:deploy)
@@ -56,6 +58,10 @@ module Chap
       strategy = config.strategy
       klass = Strategy.const_get(camel_case(strategy))
       @strategy ||= klass.new(:config => @config)
+    end
+
+    def deploy_via_strategy
+      strategy.deploy
     end
 
     def camel_case(string)
@@ -161,5 +167,8 @@ module Chap
         log "chap/#{name} hook does not exist".colorize(:red)
       end
     end
-  end
-end
+
+    benchmark :setup, :symlink_shared, :rm_rvmrc, :hook, :symlink_current, :cleanup, :deploy_via_strategy
+
+  end # eof Runner
+end # eof Chap

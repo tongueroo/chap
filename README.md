@@ -82,6 +82,15 @@ From capistrano, on local or deploy box:
 $ cap deploy # cap recipe calls "chap deploy"
 </pre>
 
+Example capistrano deploy
+
+```ruby
+namespace :deploy do
+  task :default do
+    run "chap deploy"
+  end
+```
+
 Chef Chap LWRP:
 
 <pre>
@@ -123,8 +132,7 @@ Special methods:
 * run - output the command to be ran and runs command.
 * log - log messages to [shared_path]/chap/chap.log.
 * symlink_configs - useful as a chap/deploy hook. Symlinks any config files in [shared_path]/config/* over to [release_path]/config.
-* with - used to prepend all commands with the run method in a block with another command.  A example is provided below.
-
+* with - used to prepend all commands within a block with another command.  A example is provided below.
 
 with example:
 
@@ -145,7 +153,7 @@ run "cd #{release_path} && RAILS_ENV=#{node[:environment]} rake do:something2"
 
 ### Test deploy hooks
 
-When a chap hook fails, you want want to quicky test it on the server without having commit new code and running a full deploy.  You can edit the chap/* hooks on the spot and test them via:
+When a chap hook fails, you might want to quicky test it on the server without having commit new code and running a full deploy.  You can edit the chap/* hooks on the spot and test them via:
 
 <pre>
 $ cap hook deploy
@@ -156,9 +164,11 @@ This will test the hooks on the latest timestamp release at [deploy_to]/releases
 
 ### Syncing restart phase
 
-Some apps require that all the code be available on all the servers before a restart should happen on any of the servers.  For example, if you're serving assets on the same server as your app code, you wan to make sure that the assets have been download on all servers before any of the servers start serving the new assets.  To sync the retart phase you have to break out the capistano recipe so that it calls 2 chap command:
+Some apps require that all the code be available on all the servers before a restart should happen on any of the servers.  For example, if you're serving assets on the same server as your app code, you want to make sure that all the assets have been download on all servers before any of the servers start serving the new assets.  To sync the retart phase you have to break out the capistano recipe so that it calls 2 chap command:
 
-<pre>
-$ chap deploy --stop-at-symlink
-$ chap deploy --cont-at-symlink
-</pre>
+```ruby
+task :chap do
+  run "chap deploy -q --stop-at-symlink"
+  run "chap deploy -q --cont-at-symlink"
+end
+```

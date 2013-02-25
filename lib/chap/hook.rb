@@ -1,6 +1,7 @@
 module Chap
   class Hook
     include SpecialMethods
+    include Benchmarking
 
     attr_reader :options, :config
     def initialize(path, config)
@@ -45,6 +46,7 @@ module Chap
       cmd = "#{@with} #{cmd}"
       config.run(cmd)
     end
+    benchmark_each :run, "hook"
 
   end
 end
