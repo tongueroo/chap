@@ -131,7 +131,7 @@ module Chap
 
     def shared_dirs
       dirs = config.chap[:shared_dirs] || [
-        "public/system",
+        "system",
         "log",
         "tmp/pids"
       ]
