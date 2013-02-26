@@ -1,6 +1,8 @@
 module Chap
   module Strategy
     class Checkout < Base
+      include Benchmarking
+
       def deploy
         update
         copy
@@ -43,6 +45,8 @@ BASH
         log "Code copied to #{release_path}".colorize(:green)
       end
 
+      benchmark :update, :copy
+      
     private
 
       def mark
