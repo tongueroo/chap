@@ -67,7 +67,11 @@ module Chap
       shared_dirs.each do |path|
         src = path
         relative_path = path.sub("#{shared_path}/",'')
-        dest = "#{release_path}/#{relative_path}"
+        dest = if relative_path == "system"
+                 "#{release_path}/public/#{relative_path}"
+               else
+                 "#{release_path}/#{relative_path}"
+               end
         # make sure the directory exist for symlink creation
         dirname = File.dirname(dest)
         FileUtils.mkdir_p(dirname) unless File.exist?(dirname)
