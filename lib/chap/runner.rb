@@ -10,9 +10,11 @@ module Chap
     end
 
     def deploy
+      puts "Deploy started" unless options[:silence]
       deploy_to_symlink
       deploy_from_symlink
       report_benchmarks
+      puts "Deploy finished" unless options[:silence]
     end
 
     def deploy_to_symlink

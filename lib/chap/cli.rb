@@ -18,6 +18,7 @@ module Chap
       Deploys code using settings from chap.json and node.json.  chap.json and node.json should be referenced in chap.yml.
     EOL
     method_option :quiet, :aliases => '-q', :type => :boolean, :desc => "Quiet commands"
+    method_option :silence, :aliases => '-s', :type => :boolean, :desc => "Complete silence"
     method_option :config, :aliases => '-c', :default => '/etc/chef/chap.yml', :desc => "chap.yml config to use"
     method_option :stop_at_symlink, :type => :boolean, :desc => "Deploy code but stop right before the symlink"
     method_option :cont_at_symlink, :type => :boolean, :desc => "Symlink and contine the deploy"

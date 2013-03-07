@@ -12,6 +12,7 @@ describe Chap do
   describe "internal code deploy" do
     before(:each) do
       @chap = Chap::Runner.new(
+        :silence => true,
         :quiet => true,
         :config => "#{system_root}/etc/chef/chap.yml"
       )
@@ -31,7 +32,7 @@ describe Chap do
 
   describe "cli deploy" do
     it "should deploy code via command line" do
-      system("cd #{root} && ./bin/chap deploy -q -c #{system_root}/etc/chef/chap.yml")
+      system("cd #{root} && ./bin/chap deploy -s -q -c #{system_root}/etc/chef/chap.yml")
       releases = Dir.glob("#{system_root}/data/chapdemo/releases/*").sort
       timestamp = releases.last.split('/').last
       release_path = "#{system_root}/data/chapdemo/releases/#{timestamp}"
@@ -44,7 +45,7 @@ describe Chap do
     end
 
     it "should deploy code and test hook" do
-      system("cd #{root} && ./bin/chap deploy -q -c #{system_root}/etc/chef/chap.yml")
+      system("cd #{root} && ./bin/chap deploy -s -q -c #{system_root}/etc/chef/chap.yml")
       releases = Dir.glob("#{system_root}/data/chapdemo/releases/*").sort
       timestamp = releases.last.split('/').last
       release_path = "#{system_root}/data/chapdemo/releases/#{timestamp}"
@@ -65,7 +66,7 @@ describe Chap do
     end
 
     it "should deploy code stopping and continuing at symlink" do
-      system("cd #{root} && ./bin/chap deploy --stop-at-symlink -q -c #{system_root}/etc/chef/chap.yml")
+      system("cd #{root} && ./bin/chap deploy --stop-at-symlink -s -q -c #{system_root}/etc/chef/chap.yml")
       releases = Dir.glob("#{system_root}/data/chapdemo/releases/*").sort
       timestamp = releases.last.split('/').last
       release_path = "#{system_root}/data/chapdemo/releases/#{timestamp}"
@@ -77,7 +78,7 @@ describe Chap do
       releases.should == 1
       sleep 2 if tier(2)
       # continue deploy
-      system("cd #{root} && ./bin/chap deploy --cont-at-symlink -q -c #{system_root}/etc/chef/chap.yml")
+      system("cd #{root} && ./bin/chap deploy --cont-at-symlink -s -q -c #{system_root}/etc/chef/chap.yml")
       link = File.readlink(current_path)
       link.should == release_path
     end
@@ -102,9 +103,9 @@ describe Chap do
     end
 
     it "should only respect keep option" do
-      system("cd #{root} && ./bin/chap deploy -q -c #{system_root}/etc/chef/chap.yml")
+      system("cd #{root} && ./bin/chap deploy -s -q -c #{system_root}/etc/chef/chap.yml")
       sleep 1
-      system("cd #{root} && ./bin/chap deploy -q -c #{system_root}/etc/chef/chap.yml")
+      system("cd #{root} && ./bin/chap deploy -s -q -c #{system_root}/etc/chef/chap.yml")
       releases = Dir.glob("#{system_root}/data/chapdemo/releases/*").size
       releases.should == 2 # test the keep option
     end
