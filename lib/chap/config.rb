@@ -117,7 +117,10 @@ module Chap
       cmd = "#{cmd} 2>&1" unless cmd.include?(" > ")
       out = `#{cmd}`
       log out
-      raise "DeployError" if $?.exitstatus > 0
+      if $?.exitstatus > 0
+        puts out
+        raise "DeployError"
+      end
     end
   end
 end
