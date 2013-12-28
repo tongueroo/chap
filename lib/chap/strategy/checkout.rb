@@ -56,6 +56,7 @@ BASH
       def revision
         return @revision if @revision
         result = `git ls-remote #{config.chap[:repo]} #{config.chap[:branch]}`
+        result = `git ls-remote #{config.chap[:repo]} master` if result.empty?
         @revision = result.split(/\s/).first
         log "Fetched revision #{@revision}".colorize(:green)
         @revision
