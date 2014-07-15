@@ -46,7 +46,7 @@ BASH
       end
 
       benchmark :update, :copy
-      
+
     private
 
       def mark
@@ -55,7 +55,7 @@ BASH
 
       def revision
         return @revision if @revision
-        result = `git ls-remote #{config.chap[:repo]} #{config.chap[:branch]}`
+        result = `git ls-remote #{config.chap[:repo]} #{config.chap[:branch]}` unless config.chap[:branch].match(/^deploy-(stag|prod)-$/)
         result = `git ls-remote #{config.chap[:repo]} master` if result.empty?
         @revision = result.split(/\s/).first
         log "Fetched revision #{@revision}".colorize(:green)
